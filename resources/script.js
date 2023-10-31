@@ -108,6 +108,12 @@ function getNumericChars() {
   return numeric;
 }
 
+function getSpecialChars() {
+  var numeric = confirm("Would you like special characters?");
+
+  return numeric;
+}
+
 // Function to prompt user for password options
 function getPasswordOptions() {
   var characterOptions = [];
@@ -128,6 +134,12 @@ function getPasswordOptions() {
 
   if (confirmedNumericChars) {
     characterOptions.push(...numericCharacters);
+  }
+
+  var confirmedSpecialChars = getSpecialChars();
+
+  if (confirmedSpecialChars) {
+    characterOptions.push(...specialCharacters);
   }
 
   console.log(characterOptions);
