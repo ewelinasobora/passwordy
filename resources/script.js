@@ -88,20 +88,33 @@ var upperCasedCharacters = [
   'Z'
 ];
 
-// Function to prompt user for password options
-function getPasswordOptions() {
-  var passwordLength = getPasswordLength()
+// Function returning boolean value for lowercase character option,
+// according to user's input
+function lowercaseCharacter() {
+  var lowercase = confirm("Would you like a lowercase character?")
 
-  return passwordLength;
+  return lowercase;
 }
 
-// Function for getting valid password length
+// Function to prompt user for password options
+function getPasswordOptions() {
+  var character_list = [];
+  var lowercaseChars = lowercaseCharacter();
+
+  if (lowercaseChars) {
+    character_list.push(...lowerCasedCharacters);
+  }
+
+  return character_list;
+}
+
+// Function for returning valid password length
 function getPasswordLength() {
   var getLength = prompt("Enter password length: ");
   return validatePasswordLength(parseInt(getLength));
 }
 
-// Function for password length validation
+// Function for validating password's length
 function validatePasswordLength(input) {
   var valid = false;
 
@@ -116,22 +129,25 @@ function validatePasswordLength(input) {
 }
 
 // Function for getting a random element from an array
-function getRandom(passwordLength) {
+function getRandom(passwordLength, options) {
+  let characterList = options;
   let password_chars = [];
 
-  for (let i = 0; i < passwordLength; i++) {
-    var getRandomIndex = Math.floor(Math.random() * lowerCasedCharacters.length);
+  for (let i = 0; i <= passwordLength; i++) {
+    var getRandomIndex = Math.floor(Math.random() * characterList.length);
 
-    var item = lowerCasedCharacters[getRandomIndex];
-    password_chars += item;
+    var item = characterList[getRandomIndex];
+    password_chars.push(...item);
   }
 
   return password_chars;
 }
 
 // Function to generate password with user input
-function generatePassword(password_options) {
-  return password_options.toString();
+function generatePassword(randomizedPassword) {
+  const password = randomizedPassword.join("");
+  alert(`Your generated password is: ${password}`)
+  return password;
 }
 
 // Get references to the #generate element
@@ -139,11 +155,9 @@ var generateBtn = document.querySelector('#generate');
 
 // Write password to the #password input
 function writePassword() {
+  var password_length = getPasswordLength();
   var options = getPasswordOptions();
-
-  // var password_length = getPasswordLength();
-  // var validPasswordLength = validatePasswordLength(password_length);
-  var random = getRandom(options);
+  var random = getRandom(password_length, options);
   var password = generatePassword(random);
   var passwordText = document.querySelector('#password');
 
