@@ -90,11 +90,18 @@ var upperCasedCharacters = [
 
 // Function to prompt user for password options
 function getPasswordOptions() {
-  var getPasswordLength = prompt("Enter password length: ");
-  return parseInt(getPasswordLength);
+  var passwordLength = getPasswordLength()
+
+  return passwordLength;
 }
 
-// Function to validate user input regarding password's length
+// Function for getting valid password length
+function getPasswordLength() {
+  var getLength = prompt("Enter password length: ");
+  return validatePasswordLength(parseInt(getLength));
+}
+
+// Function for password length validation
 function validatePasswordLength(input) {
   var valid = false;
 
@@ -104,7 +111,6 @@ function validatePasswordLength(input) {
     } else {
       input = prompt("Invalid password's length. Re-enter password's length: ")
     }
-
   }
   return input;
 }
@@ -133,10 +139,12 @@ var generateBtn = document.querySelector('#generate');
 
 // Write password to the #password input
 function writePassword() {
-  var passwordLength = getPasswordOptions();
-  var validPasswordLength = validatePasswordLength(passwordLength);
-  var options = getRandom(validPasswordLength);
-  var password = generatePassword(options);
+  var options = getPasswordOptions();
+
+  // var password_length = getPasswordLength();
+  // var validPasswordLength = validatePasswordLength(password_length);
+  var random = getRandom(options);
+  var password = generatePassword(random);
   var passwordText = document.querySelector('#password');
 
   passwordText.value = password;
