@@ -91,21 +91,35 @@ var upperCasedCharacters = [
 // Function to prompt user for password options
 function getPasswordOptions() {
   var getPasswordLength = prompt("Enter password length: ");
-  console.log(getPasswordLength);
   return parseInt(getPasswordLength);
+}
 
+// Function to validate user input regarding password's length
+function validatePasswordLength(input) {
+  var valid = false;
+
+  while (valid === false) {
+    if (8 <= input && input <= 128) {
+      valid = true;
+    } else {
+      input = prompt("Invalid password's length. Re-enter password's length: ")
+    }
+
+  }
+  return input;
 }
 
 // Function for getting a random element from an array
 function getRandom(passwordLength) {
   let password_chars = [];
+
   for (let i = 0; i < passwordLength; i++) {
     var getRandomIndex = Math.floor(Math.random() * lowerCasedCharacters.length);
 
     var item = lowerCasedCharacters[getRandomIndex];
     password_chars += item;
   }
-  console.log(password_chars)
+
   return password_chars;
 }
 
@@ -120,7 +134,8 @@ var generateBtn = document.querySelector('#generate');
 // Write password to the #password input
 function writePassword() {
   var passwordLength = getPasswordOptions();
-  var options = getRandom(passwordLength);
+  var validPasswordLength = validatePasswordLength(passwordLength);
+  var options = getRandom(validPasswordLength);
   var password = generatePassword(options);
   var passwordText = document.querySelector('#password');
 
