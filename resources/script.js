@@ -88,94 +88,48 @@ var upperCasedCharacters = [
   'Z'
 ];
 
-// Function returning boolean value for lowercase character option,
-// according to user's input
-function getLowerCasedChars() {
-  var lowercased = confirm("Would you like lowercased characters?")
-
-  return lowercased;
-}
-
-function getUpperCasedChars() {
-  var uppercased = confirm("Would you like uppercased characters?");
-
-  return uppercased;
-}
-
-function getNumericChars() {
-  var numeric = confirm("Would you like numeric characters?");
-
-  return numeric;
-}
-
-function getSpecialChars() {
-  var numeric = confirm("Would you like special characters?");
-
-  return numeric;
-}
-
-// Function to prompt user for password options
-function getPasswordOptions() {
-  var characterOptions = [];
-
-  var confirmedLowerCasedChars = getLowerCasedChars();
-
-  if (confirmedLowerCasedChars) {
-    characterOptions.push(...lowerCasedCharacters);
-  }
-
-  var confirmedUpperCasedChars = getUpperCasedChars();
-
-  if (confirmedUpperCasedChars) {
-    characterOptions.push(...upperCasedCharacters);
-  }
-
-  var confirmedNumericChars = getNumericChars();
-
-  if (confirmedNumericChars) {
-    characterOptions.push(...numericCharacters);
-  }
-
-  var confirmedSpecialChars = getSpecialChars();
-
-  if (confirmedSpecialChars) {
-    characterOptions.push(...specialCharacters);
-  }
-
-  console.log(characterOptions);
-  return characterOptions;
-}
-
 // Function for returning valid password length
 function getPasswordLength() {
-  var getLength = prompt("Enter password length: ");
+  const getLength = prompt("Enter password length: ");
+
   return validatePasswordLength(getLength);
 }
 
 // Function for validating password's length
 function validatePasswordLength(input) {
-  var number = parseInt(input)
-  var valid = false;
+  let number = parseInt(input)
+  let valid = false;
 
   while (valid === false) {
     if (8 <= number && number <= 128) {
       valid = true;
     } else {
-      number = prompt("Invalid password's length. Re-enter password's length: ")
+      number = prompt("Invalid password's length. Re-enter number between 8 and 128: ")
     }
   }
   return number;
 }
 
+// Function to prompt user for password options
+function getPasswordOptions() {
+  let characterOptions = [];
+  applyLowerCasedCharOption(characterOptions);
+  applyUpperCasedCharOption(characterOptions);
+  applyNumericCharOption(characterOptions);
+  applySpecialCharOption(characterOptions);
+
+  return characterOptions;
+}
+
 // Function for getting a random element from an array
 function getRandom(passwordLength, options) {
-  let characterList = options;
+  const characterList = options;
   let password_chars = [];
 
   for (let i = 0; i <= passwordLength; i++) {
-    var getRandomIndex = Math.floor(Math.random() * characterList.length);
+    const getRandomIndex = Math.floor(Math.random() * characterList.length);
 
-    var item = characterList[getRandomIndex];
+    const item = characterList[getRandomIndex];
     password_chars.push(...item);
   }
 
@@ -185,23 +139,93 @@ function getRandom(passwordLength, options) {
 // Function to generate password with user input
 function generatePassword(randomizedPassword) {
   const password = randomizedPassword.join("");
+
   alert(`Your generated password is: ${password}`)
+
   return password;
 }
 
+// Function returning boolean value for lowercased characters option,
+// depending on user's input
+function confirmLowerCasedChars() {
+  const lowercased = confirm("Would you like lowercased characters?")
+
+  return lowercased;
+}
+
+// Function returning boolean value for uppercased characters option,
+// depending on user's input
+function confirmUpperCasedChars() {
+  const uppercased = confirm("Would you like uppercased characters?");
+
+  return uppercased;
+}
+
+// Function returning boolean value for numeric characters option,
+// depending on user's input
+function confirmNumericChars() {
+  const numeric = confirm("Would you like numeric characters?");
+
+  return numeric;
+}
+
+// Function returning boolean value for special characters option,
+// depending on user's input
+function confirmSpecialChars() {
+  const special = confirm("Would you like special characters?");
+
+  return special;
+}
+
+// Function for applying lower cased characters
+function applyLowerCasedCharOption(options) {
+  const confirmedLowerCasedChars = confirmLowerCasedChars();
+
+  if (confirmedLowerCasedChars) {
+    options.push(...lowerCasedCharacters);
+  }
+}
+
+// Function for applying upper cased characters
+function applyUpperCasedCharOption(options) {
+  const confirmedUpperCasedChars = confirmUpperCasedChars();
+
+  if (confirmedUpperCasedChars) {
+    options.push(...upperCasedCharacters);
+  }
+}
+
+// Function for applying numeric characters
+function applyNumericCharOption(options) {
+  const confirmedNumericChars = confirmNumericChars();
+
+  if (confirmedNumericChars) {
+    options.push(...numericCharacters);
+  }
+}
+
+// Function for applying special characters
+function applySpecialCharOption(options) {
+  const confirmedSpecialChars = confirmSpecialChars();
+
+  if (confirmedSpecialChars) {
+    options.push(...specialCharacters);
+  }
+}
+
 // Get references to the #generate element
-var generateBtn = document.querySelector('#generate');
+let generateBtn = document.getElementById('generate');
 
 // Write password to the #password input
 function writePassword() {
-  var password_length = getPasswordLength();
-  var options = getPasswordOptions();
-  var random = getRandom(password_length, options);
-  var password = generatePassword(random);
-  var passwordText = document.querySelector('#password');
+  const password_length = getPasswordLength();
+  const options = getPasswordOptions();
+  const random = getRandom(password_length, options);
+  const password = generatePassword(random);
+  let passwordText = document.querySelector('#password');
 
   passwordText.value = password;
 };
 
 // Add event listener to generate button
-generateBtn.addEventListener('click', writePassword());
+generateBtn.addEventListener('click', writePassword);
