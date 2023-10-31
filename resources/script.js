@@ -90,42 +90,69 @@ var upperCasedCharacters = [
 
 // Function returning boolean value for lowercase character option,
 // according to user's input
-function lowercaseCharacter() {
-  var lowercase = confirm("Would you like a lowercase character?")
+function getLowerCasedChars() {
+  var lowercased = confirm("Would you like lowercased characters?")
 
-  return lowercase;
+  return lowercased;
+}
+
+function getUpperCasedChars() {
+  var uppercased = confirm("Would you like uppercased characters?");
+
+  return uppercased;
+}
+
+function getNumericChars() {
+  var numeric = confirm("Would you like numeric characters?");
+
+  return numeric;
 }
 
 // Function to prompt user for password options
 function getPasswordOptions() {
-  var character_list = [];
-  var lowercaseChars = lowercaseCharacter();
+  var characterOptions = [];
 
-  if (lowercaseChars) {
-    character_list.push(...lowerCasedCharacters);
+  var confirmedLowerCasedChars = getLowerCasedChars();
+
+  if (confirmedLowerCasedChars) {
+    characterOptions.push(...lowerCasedCharacters);
   }
 
-  return character_list;
+  var confirmedUpperCasedChars = getUpperCasedChars();
+
+  if (confirmedUpperCasedChars) {
+    characterOptions.push(...upperCasedCharacters);
+  }
+
+  var confirmedNumericChars = getNumericChars();
+
+  if (confirmedNumericChars) {
+    characterOptions.push(...numericCharacters);
+  }
+
+  console.log(characterOptions);
+  return characterOptions;
 }
 
 // Function for returning valid password length
 function getPasswordLength() {
   var getLength = prompt("Enter password length: ");
-  return validatePasswordLength(parseInt(getLength));
+  return validatePasswordLength(getLength);
 }
 
 // Function for validating password's length
 function validatePasswordLength(input) {
+  var number = parseInt(input)
   var valid = false;
 
   while (valid === false) {
-    if (8 <= input && input <= 128) {
+    if (8 <= number && number <= 128) {
       valid = true;
     } else {
-      input = prompt("Invalid password's length. Re-enter password's length: ")
+      number = prompt("Invalid password's length. Re-enter password's length: ")
     }
   }
-  return input;
+  return number;
 }
 
 // Function for getting a random element from an array
