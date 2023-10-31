@@ -2,6 +2,8 @@
 
 This is a password generator app. It can be used to generate a random password based on criteria user has selected.
 
+![passwordy](https://github.com/ewelinasobora/passwordy/assets/11948354/c649a3bd-e4d2-4879-8a5f-a41e89f0f869)
+
 ## Table of Contents
 
 - [Demo](#demo)
